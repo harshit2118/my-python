@@ -52,7 +52,30 @@ def board_full(board):
     for x in range(0,9):
         if space_check(board,x):
             return False
-    return True        
+    return True   
+## Switching between Players
+# 
+def player_switch(Board,chance,player_marker):
+    display_board(Board)
+    position= player_choice(Board)
+    put_board(Board, player_marker, position)
+             ##Checking winning condition
+    if win_check(Board,player_marker):
+        display_board(Board)
+        print("Congratulation!!{} have won this match".format(chance))
+        return "W"
+    else:
+        if board_full(Board):
+            display_board(Board)
+            print("Game is TIEEEEEEEEEEEEEEEEEE!!")
+            return "D"      
+        else:
+            if chance=="Player 1":
+                return "Player 2"
+            else:
+                return "Player 1"
+
+
 ## Playing the game
 #again
 def replay():
@@ -74,43 +97,22 @@ while True:
     chance=game_toss()
     print("{} will go first".format(chance))
     play_game = input('Are you ready to play? Enter Yes or No.')
-    
     if play_game.lower()[0] == 'y':
         game_on = True
     else:
         game_on = False
     while game_on:
          if chance=="Player 1":
-             display_board(Board)
-             position= player_choice(Board)
-             put_board(Board, player1_marker, position)
-             ##Checking winning condition
-             if win_check(Board,player1_marker):
-                 display_board(Board)
-                 print("Congratulation!!{}have won this match".format(chance))
+             chance=player_switch(Board,chance,player1_marker)
+             if chance=="W" or chance=="D":
                  break
              else:
-                 if board_full(Board):
-                     display_board(Board)
-                     print("Game is TIEEEEEEEEEEEEEEEEEE!!")
-                     break      
-                 else:
-                     chance="Player 2"
+                 pass   
          else:
-             display_board(Board)
-             position= player_choice(Board)
-             put_board(Board, player2_marker, position)
-             ##Checking winning condition
-             if win_check(Board,player2_marker):
-                 display_board(Board)
-                 print("Congratulation!!{} won this match".format(chance))
+             chance=player_switch(Board,chance,player2_marker)
+             if chance=="W" or chance=="D":
                  break
              else:
-                 if board_full(Board):
-                     display_board(Board)
-                     print("Game is TIEEEEEEEEEEEEEEEEEE!!")
-                     break      
-                 else:
-                     chance="Player 1"            
+                 pass              
     if not replay():
           break  
