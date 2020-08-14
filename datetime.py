@@ -6,3 +6,4 @@ def today_date_time():
     
 my_time = today_date_time()
 print("Hello Harshit. Today is {}".format(my_time))
+print("Updating stuf")
